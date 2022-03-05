@@ -75,7 +75,7 @@ export function TopBar() {
 export const CollapesNav = () =>{
   
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5000/images/"
+  
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -130,6 +130,11 @@ export const CollapesNav = () =>{
           <li style={{padding:"2%", margin:"1%"}}>
             <Link className="link" to="/" onClick={CloseMenu}>
               HOME
+            </Link>
+          </li>
+          <li style={{listStyle:"none", color:"whitesmoke"}}>
+            <Link className="link" to="/settings" onClick={CloseMenu}>
+              PROFILE
             </Link>
           </li>
           <li style={{padding:"2%", margin:"1%"}}>
