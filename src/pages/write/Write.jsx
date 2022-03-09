@@ -73,7 +73,7 @@ export default function Write() {
         </div>
         <div style={{width:"98 %", margin:"1%"}}>
           <Editor
-            apiKey="lg1ihi3ky61chwlqqh2m6iw4c78t13w722bg4si0nacs0brb"
+            apiKey= {process.env.REACT_APP_EDITOR_KEY}
             value={desc.content}
             init={{
               height: 600,
