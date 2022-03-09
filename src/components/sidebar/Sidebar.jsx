@@ -14,7 +14,7 @@ export default function Sidebar() {
     getCats();
   }, []);
   return (
-    <div className="sidebar">
+    <div className="sidebar" style={{paddingBottom:"60px"}}>
       <div className="sidebarItem">
         <span className="sidebarTitle" id="about">ABOUT ME</span>
         
