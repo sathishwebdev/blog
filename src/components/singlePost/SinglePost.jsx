@@ -9,7 +9,6 @@ export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
-  const PF = "http://localhost:5000/images/";
   const { user } = useContext(Context);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -46,10 +45,10 @@ export default function SinglePost() {
   };
 
   return (
-    <div className="singlePost">
+    <div className="singlePost" style={{minHeight:"100vh"}}>
       <div className="singlePostWrapper">
         {post.photo && (
-          <img src={PF + post.photo} alt="" className="singlePostImg" />
+          <img src={post.photo} alt={post.title} className="singlePostImg" />
         )}
         {updateMode ? (
           <input
@@ -94,7 +93,7 @@ export default function SinglePost() {
             onChange={(e) => setDesc(e.target.value)}
           />
         ) : (
-          <p className="singlePostDesc">{desc}</p>
+          <div className="postDesc" dangerouslySetInnerHTML={{ __html: desc}}></div>
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>

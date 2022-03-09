@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Context } from "../../context/Context";
-import {IconButton} from '@mui/material'
+import {Button, IconButton} from '@mui/material'
 import * as Icons from '@mui/icons-material'
 import "./topbar.css";
 
@@ -50,7 +50,7 @@ export function TopBar() {
       <div className="topRight">
         {user ? (
           <Link to="/settings">
-            <img className="topImg" src={PF+user.profilePic} alt="" />
+            <img className="topImg" src={''} alt="" />
           </Link>
         ) : (
           <ul className="topList">
@@ -124,51 +124,42 @@ export const CollapesNav = () =>{
     </div>
   </div>
     <div
-    className='collopse-nav' id="c-nav"
+    className='collopse-nav' id="c-nav" style={{color:"whitesmoke"}}
     >
-      <ul style={{listStyle:"none", color:"whitesmoke"}}>
-          <li style={{padding:"2%", margin:"1%"}}>
+      
             <Link className="link" to="/" onClick={CloseMenu}>
               HOME
             </Link>
-          </li>
-          <li style={{listStyle:"none", color:"whitesmoke"}}>
+         
             <Link className="link" to="/settings" onClick={CloseMenu}>
               PROFILE
             </Link>
-          </li>
-          <li style={{padding:"2%", margin:"1%"}}>
+          
             <Link className="link" to="/#about" onClick={CloseMenu}>
               ABOUT
             </Link>
-          </li>
-          <li style={{padding:"2%", margin:"1%"}} onClick={CloseMenu}>
-            <Link className="link" to="/#contact">
+            <Link className="link" to="/#contact" onClick={CloseMenu}>
               CONTACT
             </Link>
-          </li>
-          <li style={{padding:"2%", margin:"1%"}} onClick={CloseMenu}>
-            <Link className="link" to="/write">
+            <Link className="link" to="/write" onClick={CloseMenu}>
               WRITE
             </Link>
-          </li>
-          {user ? <li style={{padding:"2%", margin:"1%"}} onClick={handleLogout && CloseMenu}>
-            "LOGOUT"
-          </li>
+          
+          {user ? <Button color="inherit" variant="contained" sx={{padding:"2%", margin:"1%", color:"black"}} onClick={handleLogout && CloseMenu}>
+            LOGOUT
+          </Button>
           : <>
-            <li style={{padding:"2%", margin:"1%"}} >
+            
             <Link className="link" to="/login" onClick={CloseMenu}>
               LOGIN
             </Link>
-                    </li>
-                    <li style={{padding:"2%", margin:"1%"}} >
+                   
             <Link className="link" to="/register" onClick={CloseMenu}>
               REGISTER
             </Link>
-                    </li>
+                   
           </> 
         }
-        </ul>
     </div>
   </>
 

@@ -2,42 +2,52 @@ import { useContext, useState } from "react";
 import "./write.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { Editor } from "@tinymce/tinymce-react";
 
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [file, setFile] = useState(null);
+  const [imgSrc, setImgSrc] = useState(null);
   const { user } = useContext(Context);
+
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload =  () => {
+       setImgSrc(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+  
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(file)
     const newPost = {
       username: user.username,
       title,
       desc,
     };
-    if (file) {
-      const data =new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-      newPost.photo = filename;
 
-      console.log(newPost)
-      try {
-        await axios.post(`${process.env.REACT_BASE_BASE_URL}upload`, data);
-      } catch (err) {}
+    console.log(newPost);
+    if (imgSrc) {
+      newPost.photo = imgSrc
     }
     try {
+    console.log(newPost)
       const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts`, newPost);
       window.location.replace(`/post/` + res.data._id);
-    } catch (err) {}
+    } catch (err) {
+      console.log("error while posting")
+    }
   };
   return (
     <div className="write">
-      {file && (
-        <img className="writeImg" src={URL.createObjectURL(file)} alt="" />
+      {imgSrc && (
+        <img className="writeImg" src={imgSrc} alt="" />
       )}
       <form className="writeForm" onSubmit={handleSubmit}>
         <div className="writeFormGroup">
@@ -48,7 +58,10 @@ export default function Write() {
             type="file"
             id="fileInput"
             style={{ display: "none" }}
-            onChange={(e) => setFile(e.target.files[0])}
+            accept="image/png, image/gif, image/jpeg"
+            onChange={(e) =>{
+                getBase64(e.target.files[0])
+              }}
           />
           <input
             type="text"
@@ -58,13 +71,17 @@ export default function Write() {
             onChange={e=>setTitle(e.target.value)}
           />
         </div>
-        <div className="writeFormGroup">
-          <textarea
-            placeholder="Tell your story..."
-            type="text"
-            className="writeInput writeText"
-            onChange={e=>setDesc(e.target.value)}
-          ></textarea>
+        <div style={{width:"98 %", margin:"1%"}}>
+          <Editor
+            apiKey="lg1ihi3ky61chwlqqh2m6iw4c78t13w722bg4si0nacs0brb"
+            value={desc.content}
+            init={{
+              height: 600,
+              menubar: false
+            }}
+            onEditorChange={(e)=>{
+              setDesc(e)}}
+          />
         </div>
         <button className="writeSubmit" type="submit">
           Publish

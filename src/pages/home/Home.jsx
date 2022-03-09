@@ -17,7 +17,7 @@ export default function Home() {
     };
     fetchPosts();
   }, [search]);
-  console.log(posts);
+  
   return (
     <>
       <Header />

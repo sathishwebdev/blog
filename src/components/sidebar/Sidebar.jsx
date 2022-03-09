@@ -18,7 +18,7 @@ export default function Sidebar() {
       <div className="sidebarItem">
         <span className="sidebarTitle" id="about">ABOUT ME</span>
         
-        <p>
+        <p style={{maxWidth:"600px"}}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui
           necessitatibus nostrum illum reprehenderit.
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui
