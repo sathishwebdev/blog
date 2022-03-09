@@ -1,3 +1,5 @@
+import { Share } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -24,6 +26,13 @@ export default function SinglePost() {
     getPost();
   }, [path]);
 
+  const share = async () => {
+    try {
+      await navigator.share({ title: post.title, url: `https://storeofstories.netlify.app${location.pathname}` });
+    } catch (err) {
+      console.error("Share failed:", err.message);
+    }
+  }
   const handleDelete = async () => {
     try {
       await axios.delete(`${process.env.REACT_APP_BASE_URL}posts/${post._id}`, {
@@ -45,7 +54,7 @@ export default function SinglePost() {
   };
 
   return (
-    <div className="singlePost" style={{minHeight:"100vh"}}>
+    <div className="singlePost" style={{minHeight:"100vh", paddingTop: "80px"}}>
       <div className="singlePostWrapper">
         {post.photo && (
           <img src={post.photo} alt={post.title} className="singlePostImg" />
@@ -61,6 +70,11 @@ export default function SinglePost() {
         ) : (
           <h1 className="singlePostTitle">
             {title}
+            <IconButton
+              onClick={()=>share()}
+            >
+              <Share/>
+            </IconButton>
             {post.username === user?.username && (
               <div className="singlePostEdit">
                 <i

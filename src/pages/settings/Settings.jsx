@@ -12,7 +12,16 @@ export default function Settings() {
   const [success, setSuccess] = useState(false);
 
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5000/images/"
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload =  () => {
+       setFile(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,17 +33,10 @@ export default function Settings() {
       password,
     };
     if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-      updatedUser.profilePic = filename;
-      try {
-        await axios.post("/upload", data);
-      } catch (err) {}
+     updatedUser.profilePic = file;
     }
     try {
-      const res = await axios.put(`${process.env.REACT_APP_BASE_URL}users/` + user._id, updatedUser);
+      const res = await axios.put(`${process.env.REACT_APP_BASE_URL}users/${user._id}`, updatedUser);
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
     } catch (err) {
@@ -42,7 +44,7 @@ export default function Settings() {
     }
   };
   return (
-    <div className="settings">
+    <div className="settings" style={{ paddingTop:"80px"}}>
       <div className="settingsWrapper">
         <div className="settingsTitle">
           <span className="settingsUpdateTitle">Update Your Account</span>
@@ -52,7 +54,7 @@ export default function Settings() {
           <label>Profile Picture</label>
           <div className="settingsPP">
             <img
-              src={file ? URL.createObjectURL(file) : PF+user.profilePic}
+              src={file ? file: user.profilePic}
               alt=""
             />
             <label htmlFor="fileInput">
@@ -62,7 +64,8 @@ export default function Settings() {
               type="file"
               id="fileInput"
               style={{ display: "none" }}
-              onChange={(e) => setFile(e.target.files[0])}
+              accept="image/jpg, image/jpeg"
+              onChange={(e) => {getBase64(e.target.files[0])}}
             />
           </div>
           <label>Username</label>

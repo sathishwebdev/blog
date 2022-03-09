@@ -19,10 +19,8 @@ export default function Sidebar() {
         <span className="sidebarTitle" id="about">ABOUT ME</span>
         
         <p style={{maxWidth:"600px"}}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui
-          necessitatibus nostrum illum reprehenderit.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui
-          necessitatibus nostrum illum reprehenderit.
+         Hey 👋🏻, <br/>
+         I'm <a href="https://sathishwebdev.netlify.app"  target="_blank" rel="noreferrer">Sathish Kumar S</a> , This is a blog site where you can share your stories. In future Updation, There will be a Api for your posts so you can create your posts here and take it to where ever you want.
         </p>
       </div>
       <div className="sidebarItem">
